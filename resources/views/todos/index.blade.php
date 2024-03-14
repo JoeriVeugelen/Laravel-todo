@@ -15,7 +15,7 @@
                                 <div class="flex items-center justify-between">
                                     <div>
                                         <span class="font-bold text-white">{{ $task->user->name }}</span>
-                                        <small class="ml-2 text-sm text-gray-200">{{ $task->created_at->format('j M Y, g:i a') }}</small>
+                                        <small class="text-sm text-gray-200">- {{ $task->created_at->format('j M Y, g:i a') }}</small>
                                     </div>
                                 </div>
                                 <a href="{{ route('todos.show', $task->id) }}">
