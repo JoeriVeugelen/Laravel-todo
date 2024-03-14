@@ -9,8 +9,6 @@
         <form method="POST" action="{{ route('todos.store') }}" class="w-full mx-auto">
             @csrf
 
-            <p></p>
-
             <div>
                 <x-input-label for="title" :value="__('Title')" />
                 <x-text-input id="title" class="block w-full mt-1" type="text" name="title" :value="old('title')" required autofocus autocomplete="title" />

@@ -31,4 +31,6 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('/todos', TaskController::class);
 
-require __DIR__.'/auth.php';
+Route::patch('/tasks/{task}/toggle-done', [TaskController::class, 'toggleDone']);
+
+require __DIR__ . '/auth.php';

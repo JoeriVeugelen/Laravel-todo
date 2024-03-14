@@ -46,9 +46,10 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Task $task)
+    public function show($id)
     {
-        //
+        $task = Task::find($id);
+        return view('todos.show', ['task' => $task]);
     }
 
     /**
@@ -74,4 +75,13 @@ class TaskController extends Controller
     {
         //
     }
+
+    public function toggleDone(Task $task)
+    {
+        $task->done = !$task->done;
+        $task->save();
+
+        return back();
+    }
+
 }
