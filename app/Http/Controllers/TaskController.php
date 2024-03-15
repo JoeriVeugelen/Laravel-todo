@@ -101,10 +101,15 @@ class TaskController extends Controller
     {
         $query = $request->input('query');
 
-        $tasks = Task::where('title', 'LIKE', "%{$query}%")
-            ->orWhere('description', 'LIKE', "%{$query}%")
-            ->get();
-
+        if ($query == 'done') {
+            $tasks = Task::where('done', 1)->get();
+        } elseif ($query == 'not done') {
+            $tasks = Task::where('done', 0)->get();
+        } else {
+            $tasks = Task::where('title', 'LIKE', "%{$query}%")
+                ->orWhere('description', 'LIKE', "%{$query}%")
+                ->get();
+        }
         return view('todos.index', ['tasks' => $tasks]);
     }
 }
