@@ -33,4 +33,6 @@ Route::resource('/todos', TaskController::class);
 
 Route::patch('/tasks/{task}/toggle-done', [TaskController::class, 'toggleDone']);
 
+Route::get('/search', [TaskController::class, 'search'])->name('search');
+
 require __DIR__ . '/auth.php';

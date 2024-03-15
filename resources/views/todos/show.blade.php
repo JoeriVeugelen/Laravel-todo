@@ -1,4 +1,3 @@
-
 <x-app-layout>
     <div class="w-full px-4 mx-auto mt-6 sm:px-0 sm:w-6/12">
         <div class="p-4 mt-4 mb-5 text-white bg-gray-800 border-l-4 rounded border-white-500" role="alert">
@@ -16,8 +15,24 @@
                 <small class="pl-4 ml-auto text-gray-200">{{ $task->created_at->format('j M Y, g:i a') }}</small>
             </div>
             <div class="pl-10 ml-3">
-                <p class="mt-4 text-lg font-bold text-white">{{ $task->title }}</p>
-                <p class="mt-4 text-sm text-gray-200">{{ $task->description }}</p>
+                <form method="POST" action="/todos/{{ $task->id }}">
+                    @csrf
+                    @method('PATCH')
+                    <div class="mt-4">
+                        <x-text-input id="title" name="title" type="text" value="{{ $task->title }}" class="text-lg font-bold text-white"></x-text-input>
+                    </div>
+                    <div class="mt-4">
+                        <x-text-input id="description" name="description" type="text" value="{{ $task->description }}" class="text-lg font-bold text-white"></x-text-input>
+                    </div>
+                    <div class="mt-4">
+                        <x-primary-button type="submit">Save</x-primary-button>
+                    </div>
+                </form>
+                <form method="POST" action="/todos/{{ $task->id }}">
+                    @csrf
+                    @method('DELETE')
+                    <x-primary-button class="mt-2" style="background-color: rgb(239 68 68);" type="submit">Delete</x-primary-button>
+                </form>
                 <div class="mt-4 text-sm text-gray-200 {{ $task->done ? 'text-green-500' : 'text-red-500' }} font-bold">
                     <form method="POST" action="/tasks/{{ $task->id }}/toggle-done">
                         @csrf

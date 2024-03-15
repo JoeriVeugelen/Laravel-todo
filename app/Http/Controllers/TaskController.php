@@ -63,17 +63,30 @@ class TaskController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Task $task)
+    public function update(Request $request, $id)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+        ]);
+
+        $task = Task::find($id);
+        $task->title = $validatedData['title'];
+        $task->description = $validatedData['description'];
+        $task->save();
+
+        return redirect('/todos');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $task)
+    public function destroy($id)
     {
-        //
+        $task = Task::find($id);
+        $task->delete();
+
+        return redirect('/todos');
     }
 
     public function toggleDone(Task $task)
@@ -84,4 +97,14 @@ class TaskController extends Controller
         return back();
     }
 
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $tasks = Task::where('title', 'LIKE', "%{$query}%")
+            ->orWhere('description', 'LIKE', "%{$query}%")
+            ->get();
+
+        return view('todos.index', ['tasks' => $tasks]);
+    }
 }
